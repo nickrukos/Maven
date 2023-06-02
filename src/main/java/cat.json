@@ -1,0 +1,18 @@
+{
+  "id": 11,
+  "name": "Мурзик",
+  "age": 1.1,
+  "color": "WHITE",
+  "category": {
+    "name": "Кошки",
+    "description": "Кошки с родословной"
+  },
+  "habits": [
+    {
+      "name": "Ладит с детьми",
+      "description": "Отличная привычка",
+      "good": true
+    }
+  ],
+  "additionalInfo": "Кот со всеми прививками"
+}
