@@ -4,7 +4,9 @@ import ru.itmo.database.jdbc.SeveralSqlQueriesExamples;
 import ru.itmo.database.entity.Course;
 
 import java.util.HashSet;
+import java.util.Properties;
 
+import static ru.itmo.database.connsectionspool.DBRequestWithPool.insertWithPool;
 import static ru.itmo.database.jdbc.StatementAndPreparedExamples.*;
 import static ru.itmo.database.jdbc.SeveralSqlQueriesExamples.*;
 
@@ -54,5 +56,12 @@ public class Main {
         if (courseFromDB != null && delete(courseFromDB))
             System.out.println("Course " + courseFromDB.getTitle() + " has been deleted");
 
+        System.out.println("C3P0 POOL");
+        Course spring = new Course("Spring. Spring Boot", 2.5, 30000);
+        int springId = insertWithPool(spring);
+        if (springId > 0) {
+            System.out.println("Course " + spring.getTitle() + " has been inserted. ID = " + springId);
+            spring.setId(springId);
+        }
     }
 }
