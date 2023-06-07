@@ -7,6 +7,7 @@ import java.util.HashSet;
 import java.util.Properties;
 
 import static ru.itmo.database.connsectionspool.DBRequestWithPool.insertWithPool;
+import static ru.itmo.database.jdbc.JoinQueries.*;
 import static ru.itmo.database.jdbc.StatementAndPreparedExamples.*;
 import static ru.itmo.database.jdbc.SeveralSqlQueriesExamples.*;
 
@@ -63,5 +64,12 @@ public class Main {
             System.out.println("Course " + spring.getTitle() + " has been inserted. ID = " + springId);
             spring.setId(springId);
         }
+
+        System.out.println("JOIN QUERIES");
+
+        init();
+        System.out.println(studentByName("'Иван'"));
+        System.out.println(studentsByCourseName("'Курс №1'"));
+        System.out.println(emptyCourses());
     }
 }

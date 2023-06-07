@@ -11,7 +11,7 @@ import static ru.itmo.database.jdbc.Settings.*;
 public class SeveralSqlQueriesExamples {
 
     public static void sqlScript() {
-        // если строка состоит из нескольких запросов, необходимо разделять из точкой с запятой
+        // если строка состоит из нескольких запросов, необходимо разделять их точкой с запятой
         String createSQL = "CREATE TABLE IF NOT EXISTS tb_courses (" +
                 "id SERIAL PRIMARY KEY," +
                 "title VARCHAR(255) NOT NULL," +
@@ -20,7 +20,15 @@ public class SeveralSqlQueriesExamples {
                 "CREATE TABLE IF NOT EXISTS tb_teachers (" +
                 "id SERIAL PRIMARY KEY," +
                 "name VARCHAR(255) NOT NULL," +
-                "email VARCHAR(255) NOT NULL)";
+                "email VARCHAR(255) NOT NULL);" +
+                "CREATE TABLE IF NOT EXISTS tb_students (" +
+                "id SERIAL PRIMARY KEY," +
+                "name VARCHAR(255) NOT NULL," +
+                "course_id INTEGER NOT NULL," +
+                "CONSTRAINT student_course FOREIGN KEY (course_id) " +
+                "REFERENCES tb_courses (id) MATCH FULL " +
+                "ON UPDATE NO ACTION ON DELETE NO ACTION" +
+                ")";
 
         try {
             Class.forName("org.postgresql.Driver");

@@ -1,10 +1,14 @@
 package ru.itmo.database.entity;
 
+import java.util.ArrayList;
+
 public class Course {
     private int id;
     private String title;
     private double duration;
     private int price;
+
+    private ArrayList<Student> students;
 
     public Course() { }
 
@@ -12,6 +16,22 @@ public class Course {
         this.title = title;
         this.duration = duration;
         this.price = price;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setDuration(double duration) {
+        this.duration = duration;
+    }
+
+    public ArrayList<Student> getStudents() {
+        return students;
+    }
+
+    public void setStudents(ArrayList<Student> students) {
+        this.students = students;
     }
 
     public void setId(int id) {
