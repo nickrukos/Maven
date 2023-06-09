@@ -36,9 +36,7 @@ public class Patterns {
         StringBuilder builder = new StringBuilder("CREATE TABLE IF NOT EXISTS ");
         builder.append(tableName).append("(");
         for (Field field : fields) {
-            if (!field.isAnnotationPresent(Definition.class)) {
-                throw new IllegalArgumentException("Definition annotation was not found");
-            }
+            if (!field.isAnnotationPresent(Definition.class)) continue;
             Definition definition = field.getDeclaredAnnotation(Definition.class);
             builder.append(field.getName()).append(" ").append(definition.value()).append(",");
         }

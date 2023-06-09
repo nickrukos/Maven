@@ -4,16 +4,36 @@
 
 Должна быть реализована возможность:
 
-1. добавлять данные во все таблицы
-2. получать данные из каждой таблицы по id
-3. удалять записи из таблицы tb_cats по id
-4. обновлять информацию о котах
+1. добавлять данные во все таблицы `см. QUERIES.md` 
+2. получать данные из каждой таблицы по id `SELECT * from tb_cats WHERE id = 1;`
+3. удалять записи из таблицы tb_cats по id `DELETE from tb_cats WHERE id = 1;`
+4. обновлять информацию о котах `UPDATE tb_categories SET name='NEW_NAME', description = 'NEW_DESC' WHERE id = 1;`
 5. получать список котов по названию привычки
+`SELECT tb_cats.name AS cat_name
+FROM tb_cats
+JOIN tb_cats_habits
+ON tb_cats.id = tb_cats_habits.cat_id
+JOIN tb_habits
+ON tb_habits.id = tb_cats_habits.habit_id
+WHERE tb_habits.name = 'children';
+`
 6. получать список котов по названию категории
-7. получать список котов, у которых только положительные привычки
+`SELECT tb_cats.name AS cat_name
+FROM tb_cats
+JOIN tb_categories
+ON tb_cats.category_id = tb_categories.id
+WHERE tb_categories.name = 'purebred';
+`
+7. получать список котов, у которых только положительные привычки `см №5`
 8. получать список категорий, в которых есть коты
-9. получать котов не старше указанного возраста
-10. получать котов определенного цвета
+`SELECT tb_categories.name AS category_name
+FROM tb_categories
+LEFT JOIN tb_cats
+ON tb_cats.category_id = tb_categories.id
+WHERE tb_cats.id IS NOT NULL;
+`
+9. получать котов не старше указанного возраста `SELECT * from tb_cats WHERE  birth > '2023-01-01';`
+10. получать котов определенного цвета `SELECT * from tb_cats WHERE cat_color = 'white';`
 
 ### Вариант №2 (сложный)
 
