@@ -10,27 +10,10 @@ import ru.itmo.database.jpa.entity.LibraryUser;
 
 import java.util.List;
 
-public class LibraryUserDAO implements DAO<LibraryUser, String> {
-    private final EntityManager entityManager;
+public class LibraryUserDAO extends AbstractDao<LibraryUser, String> {
 
-    public LibraryUserDAO(EntityManager entityManager) {
-        this.entityManager = entityManager;
-    }
-
-    @Override
-    public void create(LibraryUser libraryUser) {
-        entityManager.persist(libraryUser);
-    }
-
-    @Override
-    public void delete(String s) {
-        LibraryUser libraryUser = selectByPK(s);
-        entityManager.remove(libraryUser);
-    }
-
-    @Override
-    public void update(LibraryUser libraryUser) {
-        entityManager.merge(libraryUser);
+    public LibraryUserDAO(EntityManager entityManager, Class<LibraryUser> clazz) {
+        super(entityManager, clazz);
     }
 
     @Override
@@ -66,11 +49,4 @@ public class LibraryUserDAO implements DAO<LibraryUser, String> {
 
         return libraryUsers;
     }
-
-    @Override
-    public LibraryUser selectByPK(String s) {
-        return entityManager.find(LibraryUser.class, s);
-    }
-
-
 }

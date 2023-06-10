@@ -41,7 +41,7 @@ public class JPA {
 
             System.out.println(manager.find(LibraryUser.class, "uu0000001"));
 
-            LibraryUserDAO libraryUserDAO = new LibraryUserDAO(manager);
+            LibraryUserDAO libraryUserDAO = new LibraryUserDAO(manager, LibraryUser.class);
             System.out.println(libraryUserDAO.selectAll());
         }
 
