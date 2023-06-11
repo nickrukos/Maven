@@ -3,11 +3,11 @@ package ru.itmo.database.jpa;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
+import ru.itmo.database.jpa.dao.BookDao;
 import ru.itmo.database.jpa.dao.LibraryUserDAO;
-import ru.itmo.database.jpa.entity.City;
-import ru.itmo.database.jpa.entity.LibraryUser;
-import ru.itmo.database.jpa.entity.PublishingHouse;
-import ru.itmo.database.jpa.entity.PublishingPrimaryKey;
+import ru.itmo.database.jpa.entity.*;
+
+import static ru.itmo.database.jpa.specification.Specifications.BookSpecifications.*;
 
 public class JPA {
     public static void main(String[] args) {
@@ -43,6 +43,12 @@ public class JPA {
 
             LibraryUserDAO libraryUserDAO = new LibraryUserDAO(manager, LibraryUser.class);
             System.out.println(libraryUserDAO.selectAll());
+
+
+            BookDao bookDao = new BookDao(manager, Book.class);
+            bookDao.selectOneByCondition(bookByTitle("История"));
+            bookDao.selectAllByCondition(bookByCount(33));
+            bookDao.selectAllByCondition(booksWithoutIssuance());
         }
 
     }

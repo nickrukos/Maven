@@ -1,5 +1,7 @@
 package ru.itmo.database.jpa.dao;
 
+import ru.itmo.database.jpa.specification.Specification;
+
 import java.util.List;
 
 public interface DAO<T, PK> {
@@ -8,4 +10,6 @@ public interface DAO<T, PK> {
     void update(T t);
     List<T> selectAll();
     T selectByPK(PK pk);
+    List<T> selectAllByCondition(Specification<T> specification);
+    T selectOneByCondition(Specification<T> specification);
 }

@@ -1,14 +1,16 @@
 package ru.itmo.database.jpa.dao;
 
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.NoResultException;
 import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Root;
+import ru.itmo.database.jpa.specification.Specification;
 
 import java.util.List;
 
-public class AbstractDao<T, PK> implements DAO<T, PK>{
+public class AbstractDao<T, PK> implements DAO<T, PK> {
     protected final EntityManager entityManager;
     protected final Class<T> clazz;
 
@@ -55,5 +57,44 @@ public class AbstractDao<T, PK> implements DAO<T, PK>{
     @Override
     public T selectByPK(PK pk) {
         return entityManager.find(clazz, pk);
+    }
+
+    @Override
+    public List<T> selectAllByCondition(Specification<T> specification) {
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+
+        // параметризуется типом, который этот запрос возвращает
+        CriteriaQuery<T> criteriaQuery = criteriaBuilder.createQuery(clazz);
+
+        // блок FROM - корневой объект, указывает, откуда будут браться данные
+        Root<T> root = criteriaQuery.from(clazz);
+
+        criteriaQuery.select(root).where(specification.makeCondition(root, criteriaQuery, criteriaBuilder));
+
+        TypedQuery<T> query = entityManager.createQuery(criteriaQuery);
+        List<T> tList = query.getResultList();
+
+        return tList;
+    }
+
+    @Override
+    public T selectOneByCondition(Specification<T> specification) {
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+
+        // параметризуется типом, который этот запрос возвращает
+        CriteriaQuery<T> criteriaQuery = criteriaBuilder.createQuery(clazz);
+
+        // блок FROM - корневой объект, указывает, откуда будут браться данные
+        Root<T> root = criteriaQuery.from(clazz);
+
+        criteriaQuery.select(root).where(specification.makeCondition(root, criteriaQuery, criteriaBuilder));
+
+        TypedQuery<T> query = entityManager.createQuery(criteriaQuery);
+
+        try {
+            return query.getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        }
     }
 }
