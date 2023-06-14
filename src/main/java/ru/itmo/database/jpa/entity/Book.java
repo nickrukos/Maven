@@ -27,7 +27,7 @@ public class Book extends Unique {
     @JoinColumn(name = "publishing_city", referencedColumnName = "city", nullable = false)
     private PublishingHouse publishingHouse;
 
-    @ManyToMany(mappedBy = "books", cascade = CascadeType.ALL)
+    @ManyToMany(mappedBy = "books", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private ArrayList<Author> authors;
 
     @OneToMany(mappedBy = "book")
